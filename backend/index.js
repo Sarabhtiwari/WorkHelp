@@ -19,7 +19,7 @@ app.use(
       credentials: true, 
     })
   );
-app.use(express.json()); // Parse JSON request bodies
+app.use(express.json()); 
 app.use(cookieParser());
 
 app.use("/api/worker", workerRoutes);
