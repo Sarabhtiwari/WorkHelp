@@ -125,7 +125,7 @@ exports.checkProfile = async (req, res) => {
       return res.status(404).json({ profileComplete: false });
     }
   } catch (error) {
-    console.error("Error checking profile:", error);
+    // console.error("Error checking profile:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

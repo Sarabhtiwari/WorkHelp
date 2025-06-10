@@ -1,9 +1,8 @@
-//all methods related to worker
-
 const WorkerProfile = require("../models/WorkerProfile");
 const AuthData = require("../models/AuthDetails");
 
 const Jobs = require("../models/JobSchema");
+
 //1. complete profile
 
 exports.completeProfile = async (req, res) => {
@@ -81,7 +80,7 @@ exports.postJob = async (req, res) => {
     }
 
   
-    console.log(user.authId);
+    // (user.authId);
     const worker = await WorkerProfile.findOne({
       authId: user.authId, 
     }).select("-authId");

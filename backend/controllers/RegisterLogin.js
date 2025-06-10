@@ -46,13 +46,13 @@ exports.register = async (req, res) => {
       subject: "Verify Your Email",
       html: `<p>Your OTP for email verification is: <b>${otp}</b></p><p>It will expire in 10 minutes.</p>`,
     });
-    console.log("Saving user with:", {
-      email,
-      password: hashedPassword,
-      otp,
-      otpExpiresAt,
-      role,
-    });
+    // console.log("Saving user with:", {
+    //   email,
+    //   password: hashedPassword,
+    //   otp,
+    //   otpExpiresAt,
+    //   role,
+    // });
 
     res.status(201).json({
       message: "OTP sent! Please verify your email.",
@@ -170,3 +170,5 @@ exports.logout = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
+console.log
