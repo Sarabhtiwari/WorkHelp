@@ -8,6 +8,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import FindWorkers from "./Components/FindWorkers";
 import CompleteProfile from "./Components/CompleteProfile";
+import WorkerLandingPage from "./Components/WorkerLandingPage";
+import WorkerDetails from "./Components/WorkerDetails";
 
 function App() {
   useEffect(() => {
@@ -35,6 +37,7 @@ function App() {
     <Router>
       <ToastContainer />
       <Routes>
+        <Route path="/worker-details/:id" element={<WorkerDetails />} />
         <Route path="/find-workers" element={<FindWorkers />} />
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
@@ -44,6 +47,14 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["worker"]}>
               <CompleteProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/worker-landing"
+          element={
+            <ProtectedRoute allowedRoles={["worker"]}>
+              <WorkerLandingPage />
             </ProtectedRoute>
           }
         />
