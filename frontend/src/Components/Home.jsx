@@ -77,16 +77,16 @@ const Home = () => {
           <div className="flex flex-col md:flex-row justify-center items-center gap-6 text-gray-700 text-md">
             <div className="flex items-center gap-2">
               <FontAwesomeIcon icon={faEnvelope} className="text-emerald-600" />
-              <span>support@workHelp.com</span>
+              <span>tiwaribrimhesh@gmail.com</span>
             </div>
             <div className="flex items-center gap-2">
               <FontAwesomeIcon icon={faPhone} className="text-emerald-600" />
-              <span>+91 9876543210</span>
+              <span>+91 9454943674</span>
             </div>
             <div className="flex items-center gap-2">
               <FontAwesomeIcon icon={faGithub} className="text-emerald-600" />
               <a
-                href="https://github.com/workHelp"
+                href="https://github.com/Sarabhtiwari/WorkHelp"
                 target="_blank"
                 rel="noreferrer"
                 className="hover:text-emerald-700"

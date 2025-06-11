@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const Auth = require("../models/AuthDetails");
 
-
 // Email Transporter
 const transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -13,7 +12,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-
 const generateOtp = () =>
   Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -21,24 +19,24 @@ exports.register = async (req, res) => {
   const { email, password, role } = req.body;
 
   try {
-    const existingAuth = await Auth.findOne({ email });
-    if (existingAuth)
-      return res.status(400).json({ message: "User already exists" });
-
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const otp = generateOtp();
-    const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); 
+    const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
-    const userRole = role || "user";
-    const auth = new Auth({
-      email,
-      password: hashedPassword,
-      otp,
-      otpExpiresAt,
-      role: userRole,
-    });
-    await auth.save();
+    const auth = await Auth.findOneAndUpdate(
+      { email, isVerified: false }, 
+      {
+        password: hashedPassword,
+        otp,
+        otpExpiresAt,
+        role: role || "user",
+      },
+      {
+        upsert: true, 
+        new: true, 
+        setDefaultsOnInsert: true, 
+      }
+    );
 
     await transporter.sendMail({
       from: process.env.EMAIL,
@@ -46,14 +44,6 @@ exports.register = async (req, res) => {
       subject: "Verify Your Email",
       html: `<p>Your OTP for email verification is: <b>${otp}</b></p><p>It will expire in 10 minutes.</p>`,
     });
-    // console.log("Saving user with:", {
-    //   email,
-    //   password: hashedPassword,
-    //   otp,
-    //   otpExpiresAt,
-    //   role,
-    // });
-
     res.status(201).json({
       message: "OTP sent! Please verify your email.",
       email: auth.email,
@@ -120,23 +110,23 @@ exports.login = async (req, res) => {
     );
 
     res.cookie("authToken", token, {
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === "production", 
-      sameSite: "Strict", 
-      maxAge: 2 * 60 * 60 * 1000, 
-    });
-  
-    res.cookie("role", auth.role, {
-      httpOnly: false, 
+      httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
-      maxAge: 2 * 60 * 60 * 1000, 
+      maxAge: 2 * 60 * 60 * 1000,
+    });
+
+    res.cookie("role", auth.role, {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+      maxAge: 2 * 60 * 60 * 1000,
     });
     res.status(200).json({
       success: true,
       message: "Login successful",
       role: auth.role,
-      token, 
+      token,
     });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
@@ -154,15 +144,13 @@ exports.login = async (req, res) => {
 //   }
 // };
 
-
-
 // Logout user
 exports.logout = async (req, res) => {
   try {
     res.clearCookie("authToken", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict"
+      sameSite: "Strict",
     });
 
     res.status(200).json({ success: true, message: "Logged out successfully" });
@@ -170,3 +158,5 @@ exports.logout = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
+
