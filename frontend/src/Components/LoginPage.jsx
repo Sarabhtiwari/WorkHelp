@@ -1,3 +1,4 @@
+const BASE_URL = import.meta.env.VITE_API_URL;
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,7 +17,7 @@ const LoginPage = () => {
 
     try {
       const loginResponse = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${BASE_URL}/api/auth/login`,
         { email, password },
         {
           headers: { "Content-Type": "application/json" },

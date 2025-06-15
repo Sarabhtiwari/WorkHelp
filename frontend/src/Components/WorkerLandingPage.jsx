@@ -1,3 +1,4 @@
+const BASE_URL = import.meta.env.VITE_API_URL;
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +20,7 @@ const WorkerLandingPage = () => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:5000/api/worker/post-job",
+        `${BASE_URL}/api/worker/post-job`,
         {},
         {
           headers: { "Content-Type": "application/json" },
@@ -46,7 +47,7 @@ const WorkerLandingPage = () => {
     try {
       setLoading(true);
       const response = await axios.delete(
-        "http://localhost:5000/api/worker/unpost-job",
+        `${BASE_URL}/api/worker/unpost-job`,
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,

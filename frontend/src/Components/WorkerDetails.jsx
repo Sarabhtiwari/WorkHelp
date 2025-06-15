@@ -1,3 +1,4 @@
+const BASE_URL = import.meta.env.VITE_API_URL;
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; 
 import axios from "axios";
@@ -11,7 +12,7 @@ const WorkerDetails = () => {
   useEffect(() => {
     const fetchWorkerDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/worker/details/${id}`, {
+        const response = await axios.get(`${BASE_URL}/api/worker/details/${id}`, {
           withCredentials: true
         });
         setWorker(response.data); 

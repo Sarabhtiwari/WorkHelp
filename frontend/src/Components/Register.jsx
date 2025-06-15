@@ -1,3 +1,4 @@
+const BASE_URL = import.meta.env.VITE_API_URL;
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +18,7 @@ const Register = () => {
   const handleSendOtp = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${BASE_URL}/api/auth/register`,
         {
           email: Auth.email,
           password: Auth.password,
@@ -39,7 +40,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/verify-email",
+        `${BASE_URL}/api/auth/verify-email`,
         {
           email: Auth.email,
           otp: Auth.otp,
