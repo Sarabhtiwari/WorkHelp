@@ -111,15 +111,15 @@ exports.login = async (req, res) => {
 
     res.cookie("authToken", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure: true,
+      sameSite: "None",
       maxAge: 2 * 60 * 60 * 1000,
     });
 
     res.cookie("role", auth.role, {
       httpOnly: false,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
+      secure: true,
+      sameSite: "None",
       maxAge: 2 * 60 * 60 * 1000,
     });
     res.status(200).json({
