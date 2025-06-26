@@ -20,10 +20,6 @@
   - **Authentication:** JWT, bcrypt  
   - **Deployment:** Render
 
-##  Screenshots (Optional)
-
-> *(Include images of worker list, job form, login page, etc. if available)*
-
 ##  Getting Started
 
 ###  Installation
@@ -31,6 +27,7 @@
 ```bash
 git clone https://github.com/yourusername/workhelp.git
 cd workhelp
-npm install
 cd frontend
+npm install
+cd backend
 npm install
